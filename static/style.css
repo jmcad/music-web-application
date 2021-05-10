@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway&display=swap');
+
+* {
+    font-family: 'Raleway', sans-serif;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 10;
+    padding: 0px;
+    margin: 0px;
+    background-color: #424242;
+    overflow: visible;
+}
+
+nav {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+
+nav ul {
+    margin-top: 0px;
+    padding-left: 10px;
+    text-align: center;
+}
+
+nav li {
+    display: inline-block;
+    line-height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1.2em;
+    list-style-type: none;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+
+.content {
+    max-width: 1400px;
+    margin: auto;
+    width: 90%;
+    position: relative;
+}
+
+.main {
+    margin-top: 100px;
+}
+
+main {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+main>* {
+    margin: 5px;
+}
+
+.banner {
+    position: relative;
+    border-top: 5px #424242;
+    border-bottom: 5px #424242;
+}
+
+.banner img {
+    width: 100%;
+}
+
+.article-box {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+article {
+    position: relative;
+    flex: 1 1 280px;
+    padding: 5px;
+}
+
+article img {
+    width: calc(100% - 4px);
+    border: 2px solid black;
+}
