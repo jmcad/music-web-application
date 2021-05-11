@@ -26,6 +26,7 @@ header {
     position: fixed;
     top: 0px;
     left: 0px;
+    height: 55px;
     width: 100%;
     z-index: 10;
     padding: 0px;
@@ -34,10 +35,28 @@ header {
     overflow: visible;
 }
 
+#logo {
+    position: relative;
+    top: 0px;
+    height: 55px;
+    display: inline-block;
+    
+}
+
+#logo h1 {
+    margin: 10px;
+}
+
+#logo a {
+    color: white;
+    text-decoration: none;
+}
+
 nav {
     position: absolute;
     right: 0px;
     top: 0px;
+    height: 55px;
     padding: 0px;
     margin: 0px;
 }
@@ -45,12 +64,12 @@ nav {
 nav ul {
     margin-top: 0px;
     padding-left: 10px;
-    text-align: center;
 }
 
 nav li {
     display: inline-block;
-    line-height: 40px;
+    height: 55px;
+    line-height: 55px;
     padding-left: 10px;
     padding-right: 10px;
     font-size: 1.2em;
@@ -77,6 +96,7 @@ nav a {
 main {
     display: flex;
     flex-direction: row-reverse;
+    align-items: center;
     justify-content: center;
     margin-top: 100px;
 }
@@ -109,4 +129,35 @@ article {
 article img {
     width: calc(100% - 4px);
     border: 2px solid black;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+}
+
+.categories ul {
+    padding-top: 80px;
+}
+
+.categories li {
+    list-style-type: none;
+    font-size: 2em;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.categories a {
+    color: black;
+    text-decoration: none;
+}
+
+.track {
+    width: 500px;
+}
+
+.track img {
+    width: 100%;
 }
