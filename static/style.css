@@ -1,166 +1,72 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway&display=swap');
-
 * {
-    font-family: 'Raleway', sans-serif;
+	font-family: Verdana, Sans-serif;
+	font-size: 0.95em;
+	color: #333333;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
+#albums {
+	width: 250px;
+	border: 1px solid #ececec;
+	float: left;
+	margin-right: 10px;
+	padding: 10px;
 }
 
-body {
-    margin: 0;
-    height: 100%;
-    padding: 0px;
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
+#albums ul {
+	list-style-type: none;
+	padding-left: 0;
 }
 
-h1 {
-    font-family: 'Montserrat', sans-serif;
+#albums li {
+	border-bottom: 1px solid #ececec;
 }
 
-header {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    height: 55px;
-    width: 100%;
-    z-index: 10;
-    padding: 0px;
-    margin: 0px;
-    background-color: #424242;
-    overflow: visible;
+#albums ul a {
+	text-decoration: none;
+	display: block;
+	padding: 5px;
 }
 
-#logo {
-    position: relative;
-    top: 0px;
-    height: 55px;
-    display: inline-block;
-    
+#albums ul a:hover {
+	background-color: #8CDDF5;
 }
 
-#logo h1 {
-    margin: 10px;
+#album_info {
+	border: 1px solid #ececec;
+	float: left;
 }
 
-#logo a {
-    color: white;
-    text-decoration: none;
+#album_cover {
+	width: 250px;
+	float: left;		
 }
 
-nav {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    height: 55px;
-    padding: 0px;
-    margin: 0px;
+#album_cover img {
+	width: 100%;
 }
 
-nav ul {
-    margin-top: 0px;
-    padding-left: 10px;
+#album_songs {
+	width: 300px;
+	float: left;
 }
 
-nav li {
-    display: inline-block;
-    height: 55px;
-    line-height: 55px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 1.2em;
-    list-style-type: none;
+table {
+	width: 100%;
 }
 
-nav a {
-    color: white;
-    text-decoration: none;
+td {
+	vertical-align: top;
 }
 
-
-.content {
-    max-width: 1400px;
-    margin: auto;
-    width: 90%;
-    position: relative;
+.song_no {
+	text-align: right; 
+	padding-right: 10px; 
 }
 
-.main {
-    margin-top: 100px;
+.song_length {
+	padding-right: 10px; 
+	text-align: right; 
 }
 
-main {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-top: 100px;
-}
-
-main>* {
-    margin: 5px;
-}
-
-
-.categories li {
-    display: inline-block;
-    list-style-type: none;
-    font-size: 2em;
-    padding-left: 10px;
-    padding-right: 10px;
-
-}
-
-.categories a {
-    color: black;
-    text-decoration: none;
-}
-
-.track {
-    width: 100%;
-}
-
-.track img {
-    width: 100%;
-}
-
-.banner {
-    position: relative;
-}
-
-.banner img {
-    width: 100%;
-}
-
-.article-box {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-article {
-    position: relative;
-    flex: 1 1 280px;
-    padding: 5px;
-}
-
-article:hover {
-    background-color: #E9E9E9;
-}
-
-article img {
-    width: calc(100% - 4px);
-    border: 2px solid black;
-}
-
-@media screen and (max-width: 1200px) {
-    main {
-        flex-direction: column;
-    }
-    aside {
-        min-width: initial;
-    }
+.song_title {
 }

@@ -42,6 +42,19 @@
         </header>
         <main class="content main">
             <router-view></router-view>
+            <div id="albums">
+                <ul id="albums_list">
+                    <li v-for="album in albums">
+                        <!-- display the album here -->
+                        <a href="#"
+                            v-on:click="show(album.album_id)"
+                        >
+                            {{ album.artist}} - {{ album.title }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <album-info v-bind:album_id="album_id" v-show="album_id"></album-info>
         </main>
         <script src="/static/router.js"></script>
     </div>

@@ -9,18 +9,6 @@ const routes = [
         path: '/library',
         name: 'library',
         component: Library,
-        children: [
-            {
-                path: 'tracks',
-                name: 'tracks',
-                component: Tracks
-            },
-            {
-                path: 'albums',
-                name: 'albums',
-                component: Albums
-            },
-        ]
     }
 ]
 
@@ -31,9 +19,28 @@ const router = VueRouter.createRouter({
 })
 
 // Create and mount the root instance.
-const app = Vue.createApp({})
+const app = Vue.createApp({
+    data: function(){
+        return {
+            albums: [],
+            album_id: ""
+        }
+    },
+    created: async function(){
+        const response = await fetch('/albums');
+        if (response.status == 200){
+            const result = await response.json();
+            this.albums = result;
+        }
+    },
+    methods: {
+        show: function(id){
+            console.log("show ", id);
+            this.album_id = id;
+        }
+    }
+})
 
-app.component('item-section', ItemSection)
-app.component('albums', Albums)
+app.component("album-info", albuminfo)
 app.use(router)
 app.mount('#app')
