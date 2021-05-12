@@ -95,7 +95,7 @@ nav a {
 
 main {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     margin-top: 100px;
@@ -105,10 +105,31 @@ main>* {
     margin: 5px;
 }
 
+
+.categories li {
+    display: inline-block;
+    list-style-type: none;
+    font-size: 2em;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+.categories a {
+    color: black;
+    text-decoration: none;
+}
+
+.track {
+    width: 100%;
+}
+
+.track img {
+    width: 100%;
+}
+
 .banner {
     position: relative;
-    border-top: 5px #424242;
-    border-bottom: 5px #424242;
 }
 
 .banner img {
@@ -126,38 +147,20 @@ article {
     padding: 5px;
 }
 
+article:hover {
+    background-color: #E9E9E9;
+}
+
 article img {
     width: calc(100% - 4px);
     border: 2px solid black;
 }
 
-.categories {
-    display: flex;
-    flex-wrap: wrap;
-    width: 500px;
-}
-
-.categories ul {
-    padding-top: 80px;
-}
-
-.categories li {
-    list-style-type: none;
-    font-size: 2em;
-    padding-top: 20px;
-    padding-bottom: 20px;
-
-}
-
-.categories a {
-    color: black;
-    text-decoration: none;
-}
-
-.track {
-    width: 500px;
-}
-
-.track img {
-    width: 100%;
+@media screen and (max-width: 1200px) {
+    main {
+        flex-direction: column;
+    }
+    aside {
+        min-width: initial;
+    }
 }
