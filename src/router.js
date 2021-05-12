@@ -58,10 +58,14 @@ const routes = [
     }
 ]
 
-const router = new VueRouter({
-    routes
-});
+// Create a router instance and pass the 'routes' option
+const router = VueRouter.createRouter({
+    history: VueRouter.createWebHashHistory(),
+    routes,
+})
 
-const app = new Vue({
-    router
-}).$mount('#app')
+// Create and mount the root instance.
+const app = Vue.createApp({})
+
+app.use(router)
+app.mount('#app')
