@@ -1,25 +1,20 @@
-const Library = { template: `
-    <item-section></item-section>
-    <albums></albums>
-`
-}
-
-const Tracks = {
+const library = {
     template: `
-    <h1>This is the Track Page</h1>`
-}
-
-const Albums = { template: `
-    <div class="article-box">
-        <article>
-            <a href="">
-                <img src="/static/images/musictrack.jpg" alt="">
-            </a>
-        </article>
-        <article>
-            <a href="">
-                <img src="/static/images/musictrack.jpg" alt="">
-            </a>
-        </article>
-    </div>    `
+    <div class="library content">
+        <div class="vertical-bar">
+            <div id="tabs">
+                <ul>
+                    <router-link to="/library/alltracks"><li>All</li></router-link>
+                    <router-link to="/library/playlists"><li>Playlist</li></router-link>
+                </ul>
+            </div>
+        </div>
+        <router-view></router-view>
+    </div>
+    `,
+    computed: {
+        tracks() {
+            return this.$store.state.tracks
+        }
+    }
 }

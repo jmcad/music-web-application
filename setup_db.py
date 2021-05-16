@@ -1,7 +1,5 @@
 import sqlite3
 
-database = "database.db"
-
 music_data = [
                 (1, 'Ghost', 'Hoshimachi Suisei', 'ghost_suisei.jpg'),
                 (2, 'Next Color Planet', 'Hoshimachi Suisei', 'next_color_planet.jpg'),
@@ -50,6 +48,7 @@ def insert_data(conn):
 
     try:
         cur.executemany(sql, music_data)
+        conn.commit()
         print("Data inserted to table!")
     except sqlite3.Error as err:
         print(err)
@@ -72,7 +71,7 @@ def query_data(conn):
 
 if __name__ == "__main__":
     try:
-        conn = sqlite3.connect(database)
+        conn = sqlite3.connect("database.db")
     except sqlite3.Error as err:
         print(err)
     else:

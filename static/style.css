@@ -1,72 +1,239 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway&display=swap');
+
 * {
-	font-family: Verdana, Sans-serif;
-	font-size: 0.95em;
-	color: #333333;
+    font-family: 'Raleway', sans-serif;
 }
 
-#albums {
-	width: 250px;
-	border: 1px solid #ececec;
-	float: left;
-	margin-right: 10px;
-	padding: 10px;
+html {
+    position: relative;
+    min-height: 100%;
 }
 
-#albums ul {
-	list-style-type: none;
-	padding-left: 0;
+body {
+    margin: 0;
+    height: 100%;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
 }
 
-#albums li {
-	border-bottom: 1px solid #ececec;
+h1 {
+    font-family: 'Montserrat', sans-serif;
 }
 
-#albums ul a {
-	text-decoration: none;
-	display: block;
-	padding: 5px;
+a {
+    text-decoration: none;
 }
 
-#albums ul a:hover {
-	background-color: #8CDDF5;
+header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 55px;
+    width: 100%;
+    z-index: 10;
+    padding: 0px;
+    margin: 0px;
+    background-color: #424242;
+    overflow: visible;
 }
 
-#album_info {
-	border: 1px solid #ececec;
-	float: left;
+#logo {
+    position: relative;
+    top: 0px;
+    height: 55px;
+    display: inline-block;
+    
 }
 
-#album_cover {
-	width: 250px;
-	float: left;		
+#logo h1 {
+    margin: 10px;
 }
 
-#album_cover img {
-	width: 100%;
+#logo a {
+    color: white;
 }
 
-#album_songs {
-	width: 300px;
-	float: left;
+nav {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 55px;
+    padding: 0px;
+    margin: 0px;
 }
 
-table {
-	width: 100%;
+nav ul {
+    margin-top: 0px;
+    padding-left: 10px;
 }
 
-td {
-	vertical-align: top;
+nav li {
+    display: inline-block;
+    height: 55px;
+    line-height: 55px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1.2em;
+    list-style-type: none;
 }
 
-.song_no {
-	text-align: right; 
-	padding-right: 10px; 
+nav a {
+    color: white;
 }
 
-.song_length {
-	padding-right: 10px; 
-	text-align: right; 
+
+.content {
+    max-width: 1400px;
+    margin: auto;
+    width: 90%;
+    position: relative;
 }
 
-.song_title {
+.main {
+    margin-top: 100px;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+main>* {
+    margin: 5px;
+}
+
+
+.categories li {
+    display: inline-block;
+    list-style-type: none;
+    font-size: 2em;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+.categories a {
+    color: black;
+}
+
+.track {
+    width: 100%;
+}
+
+.track img {
+    width: 100%;
+}
+
+.banner {
+    position: relative;
+}
+
+.banner img {
+    width: 100%;
+}
+
+.article-box {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+article {
+    position: relative;
+    flex: 1 1 280px;
+    padding: 5px;
+}
+
+article img {
+    width: calc(100% - 4px);
+    border-radius: 5px;
+    transition: 1s;
+}
+
+article img:hover {
+    background-color: black;
+}
+
+article h3, article span {
+    margin: 0;;
+}
+
+article a {
+    color: #424242;
+}
+
+@media screen and (max-width: 1200px) {
+    main {
+        flex-direction: column;
+    }
+    aside {
+        min-width: initial;
+    }
+}
+
+.flexbox {
+    justify-content: center;
+    align-content: center;
+}
+
+.img-box {
+    position: relative;
+}
+
+.img-box img {
+    width: 280px;
+}
+
+.track-details {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Library */
+
+.library {
+    margin-top: 100px;
+}
+
+.vertical-bar {
+    display: block;
+    /* width: 100%;
+    border-style: solid;
+    border: 2px solid black; */
+}
+
+#tabs {
+    left: -38px;
+    position: relative;
+    display: flex;
+}
+
+#tabs li {
+    display: inline-block;
+    list-style-type: none;
+    padding-right: 28px;
+    font-size: 1.5em;
+    color: #424242;
+    white-space: nowrap;
+}
+
+select {
+    border: none;
+}
+
+.frameboxed {
+    display: flex;
+}
+
+/* Player controls */
+.play, .pause {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 15px 25px;
 }
