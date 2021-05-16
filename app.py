@@ -1,6 +1,7 @@
 from flask import Flask, request, g
 import json
 import math
+import sqlite3
 
 app = Flask(__name__)
 
@@ -9,19 +10,19 @@ TRACKS = [
                     "title": "Renegades",
                     "artist": "ONE OK ROCK",
                     "img": "renegades.jpg",
-                    "src": "/static/assets/music.mp3"
+                    "src": "/static/assets/renegades.mp3"
                 },
                 {
-                    "title": "Track1",
-                    "artist": "Track1 Artist",
-                    "img": "musictrack.jpg",
-                    "src": "/static/assets/ghost.mp3"
+                    "title": "Need You",
+                    "artist": "Lost Sky",
+                    "img": "lostsky-needyou.jpg",
+                    "src": "/static/assets/Lost Sky - Need You [NCS Release].mp3"
                 },
                 {
-                    "title": "Track2 title",
-                    "artist": "Track2 artist",
-                    "img": "musictrack.jpg",
-                    "src": "/static/assets/ghost.mp3"
+                    "title": "Royalty",
+                    "artist": "Egzod, Maestro Chives, Neoni",
+                    "img": "royalty.jpg",
+                    "src": "/static/assets/Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3"
                 },
                 {
                     "title": "Track3 title",
@@ -74,17 +75,29 @@ def index():
 
 @app.route('/tracks')
 def tracks():
-    return json.dumps(TRACKS)
+    return json.dumps(getTracks())
 
 def getTracks():
-    # TODO: Fetch data from database
+    db = get_db()
+    cur = db.cursor()
+    
+    tracks = []
 
-    tracks = {}
+    sql = "SELECT `track_id`, `title`, `artist`, `length`, `cover`, `source` FROM `tracks`"
+    cur.execute(sql)
+    for (trackid, title, artist, length, cover, source) in cur:
+        tracks.append({
+            "trackid": trackid,
+            "title": title,
+            "artist": artist,
+            "length": length,
+            "cover": cover,
+            "src": source
+        })
 
     return tracks
 
 if __name__ == "__main__":
-    print(TRACKS)
-    app.run()
+    app.run(debug=True)
 
 

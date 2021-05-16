@@ -6,7 +6,7 @@ const track = {
             <h1>This is the track page</h1>
             <div class="article-box flexbox">
                 <div class="img-box">
-                    <img v-bind:src="'/static/images/' + getTrack.img">
+                    <img v-bind:src="'/static/images/' + getTrack.cover">
                 </div>
                 <div class="track-details">
                     <h2>{{ getTrack.title }}</h2>

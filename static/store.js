@@ -56,11 +56,10 @@ const store = Vuex.createStore({
     // },
     state() {
         return {
-            tracks: []
+            tracks: [],
         }
 
     },
-    
     mutations: {
         FETCH_TRACKS(state, tracks) {
             state.tracks = tracks;
@@ -75,9 +74,4 @@ const store = Vuex.createStore({
             }
         }
     },
-    getters: {
-        allTracks: (state) => {
-            return state.tracks
-        }
-    }
 })
