@@ -97,7 +97,7 @@ nav a {
 
 main {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: center;
     margin-top: 100px;
@@ -146,16 +146,24 @@ article {
     position: relative;
     flex: 1 1 280px;
     padding: 5px;
+    transition: .3s ease-out;
+}
+
+article:hover {
+    transform: translateY(10px);
+
+}
+
+article:hover img {
+    opacity: 0.7;
+    background-color: black;
 }
 
 article img {
     width: calc(100% - 4px);
     border-radius: 5px;
-    transition: 1s;
-}
-
-article img:hover {
-    background-color: black;
+    opacity: 1;
+    transition: .3s ease;
 }
 
 article h3, article span {
@@ -195,7 +203,7 @@ article a {
     justify-content: space-between;
 }
 
-/* Library */
+/* Library page */
 
 .library {
     margin-top: 100px;
@@ -223,10 +231,6 @@ article a {
     white-space: nowrap;
 }
 
-select {
-    border: none;
-}
-
 .frameboxed {
     display: flex;
 }
@@ -236,4 +240,34 @@ select {
     font-size: 20px;
     font-weight: 500;
     padding: 15px 25px;
+}
+
+.dark {
+    background-color: black;
+    color: white;
+}
+
+/* Page transition */
+.fade-enter-from {
+    opacity: 0;
+}
+
+.fade-enter-to {
+    opacity: 1;
+}
+
+.fade-enter-active {
+    transition: all 2s ease;
+}
+
+.fade-leave-from {
+    opacity: 1;
+}
+
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-leave-active{
+    transition: all 2s ease;
 }
