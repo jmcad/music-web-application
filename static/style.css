@@ -79,6 +79,10 @@ nav li {
     list-style-type: none;
 }
 
+nav li:hover {
+    background-color: black;
+}
+
 nav a {
     color: white;
 }

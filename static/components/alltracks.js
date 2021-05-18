@@ -23,7 +23,8 @@ const alltracks = {
     data() {
         return {
             sortoptions: ['Custom order', 'Title', 'Artist'],
-            search: ""
+            search: "",
+            sortedTracks: this.filteredTracks
         }
     },
     computed: {
@@ -33,9 +34,7 @@ const alltracks = {
                 .includes(this.search.toLowerCase()))
         },
         sortedArray() {
-            const sortedTracks = this.filteredTracks
-
-            sortedTracks = sortedTracks.sort((a,b) => {
+            this.sortedTracks = this.sortedTracks.sort((a,b) => {
                 const fa = a.title.toLowerCase(), fb = b.title.toLowerCase()
                 
                 if (fa < fb) {

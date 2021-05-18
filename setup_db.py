@@ -1,9 +1,9 @@
 import sqlite3
 
 music_data = [
-                (1, 'Ghost', 'Hoshimachi Suisei', 281, 'ghost.jpg', '/static/assets/GHOST.mp3'),
-                (2, 'Next Color Planet', 'Hoshimachi Suisei', 260, 'nextcolorplanet.jpg', '/static/assets/NEXT COLOR PLANET.mp3'),
-                (3, 'Mogu Mogu YUMMY!', 'Nekomata Okayu', 200, 'yummy.jpg', '/static/assets/YUMMY.mp3'),
+                # (1, 'Ghost', 'Hoshimachi Suisei', 281, 'ghost.jpg', '/static/assets/GHOST.mp3'),
+                # (2, 'Next Color Planet', 'Hoshimachi Suisei', 260, 'nextcolorplanet.jpg', '/static/assets/NEXT COLOR PLANET.mp3'),
+                # (3, 'Mogu Mogu YUMMY!', 'Nekomata Okayu', 200, 'yummy.jpg', '/static/assets/YUMMY.mp3'),
                 (4, 'Renegades', 'ONE OK ROCK', 242, 'renegades.jpg', '/static/assets/renegades.mp3'),
                 (5, 'Need You', 'Lost Sky', 277, 'lostsky-needyou.jpg', '/static/assets/Lost Sky - Need You [NCS Release].mp3'),
                 (6, 'Royalty', 'Egzod, Maestro Chives, Neoni', 223, 'royalty.jpg', '/static/assets/Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3'),
