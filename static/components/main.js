@@ -7,8 +7,8 @@ const main = {
             </div>
             
             <div class="article-box">
-                <article v-for="track, index in tracks">
-                    <router-link tag="li" v-bind:to="{ name: 'track', params: { trackID: index } }">
+                <article v-for="track in tracks">
+                    <router-link tag="li" v-bind:to="{ name: 'track', params: { trackID: track.trackid } }">
                         <img v-bind:src="'/static/images/' + track.cover" alt="">
                         <h3>{{ track.title }}</h3>
                         <span>{{ track.artist }}</span>
@@ -20,17 +20,10 @@ const main = {
     `,
     computed: {
         tracks() {
-            return this.$store.state.tracks
+            return this.$store.getters.getTracks
         }
     },
     mounted() {
         return this.$store.dispatch("fetchTracks")
-    },
-
-    // // Getter method
-    // computed: {
-    //     tracks() {
-    //         return store.getters.allTracks
-    //     },
-    // }
+    }
 }

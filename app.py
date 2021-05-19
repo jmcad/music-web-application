@@ -5,58 +5,6 @@ import sqlite3
 
 app = Flask(__name__)
 
-TRACKS = [
-                {
-                    "title": "Renegades",
-                    "artist": "ONE OK ROCK",
-                    "img": "renegades.jpg",
-                    "src": "/static/assets/renegades.mp3"
-                },
-                {
-                    "title": "Need You",
-                    "artist": "Lost Sky",
-                    "img": "lostsky-needyou.jpg",
-                    "src": "/static/assets/Lost Sky - Need You [NCS Release].mp3"
-                },
-                {
-                    "title": "Royalty",
-                    "artist": "Egzod, Maestro Chives, Neoni",
-                    "img": "royalty.jpg",
-                    "src": "/static/assets/Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3"
-                },
-                {
-                    "title": "Track3 title",
-                    "artist": "Track3 artist",
-                    "img": "musictrack.jpg",
-                    "src": "/static/assets/ghost.mp3"
-                },
-                {
-                    "title": "Track4 title",
-                    "artist": "Track4 artist",
-                    "img": "musictrack.jpg",
-                    "src": "/static/assets/ghost.mp3"
-                },
-                {
-                    "title": "Track5 title",
-                    "artist": "Track5 artist",
-                    "img": "musictrack.jpg",
-                    "src": "/static/assets/ghost.mp3"
-                },
-                {
-                    "title": "Track6 title",
-                    "artist": "Track6 artist",
-                    "img": "musictrack.jpg",
-                    "src": "/static/assets/ghost.mp3"
-                },
-                {
-                    "title": "Track7 title",
-                    "artist": "Track7 artist",
-                    "img": "musictrack.jpg",
-                    "src": "/static/assets/ghost.mp3"
-                },
-    ]
-
-
 def get_db():
     if not hasattr(g, '_database'):
         g._database = sqlite3.connect('database.db')
@@ -96,6 +44,17 @@ def getTracks():
         })
 
     return tracks
+
+# TODO: Get data fro database
+def getPlaylists():
+    db = get_db()
+    cur = db.cursor()
+
+    playlists = []
+
+    sql = "SELECT `name`, `description` FROM `playlists`"
+
+    return playlists
 
 
 if __name__ == "__main__":
