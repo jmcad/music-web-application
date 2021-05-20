@@ -3,9 +3,10 @@ const alltracks = {
     <div>
         <h1>All tracks</h1>
         <select name="sortBy" v-model="sortBy">
-            <option>Custom order</option>
-            <option value="title">Title</option>
-            <option value="artist">Artist</option>
+            <option v-for="sortOption in sortOptions" 
+                :label="sortOption.label" 
+                :value="sortOption.value">
+            </option>
         </select>
         <input type="text" v-model="search" placeholder="Search"/>
     </div>
@@ -23,44 +24,45 @@ const alltracks = {
     `,
     data() {
         return {
-            search: Vue.ref(''),
+            sortOptions: [
+                { label: 'Custom order', value: 'none' },
+                { label: 'Title', value: 'title' },
+                { label: 'Artist', value: 'artist' }
+            ],
+            search: '',
             sortBy: ''
         }
     },
     computed: {
         filteredTracks() {
-            if (this.search != '' && this.search) {
-                this.$store.getters.getTracks = this.$store.getters.getTracks.filter(track => {
-                    return track.title.toLowerCase().includes(this.search.toLowerCase())
-                })
-            }
+            const temp = this.$store.getters.getTracks.filter((track) => {
+                return track.title.toLowerCase().includes(this.search.toLowerCase())
+            })
 
-            this.$store.getters.getTracks = this.$store.getters.getTracks.sort((a,b) => {
-                if (this.sortBy == 'title') {
-                    const fa = a.title.toLowerCase(), fb = b.title.toLowerCase()
-                
-                    if (fa < fb) {
+            if (this.sortBy == 'title') {
+                return temp.sort((a, b) => {
+                    if (a.title.toLowerCase() < b.title.toLowerCase()) {
                         return -1
                     }
-                    if (fa > fb) {
+                    if (a.title.toLowerCase() > b.title.toLowerCase()) {
                         return 1
                     }
                     return 0
-                } else if (this.sortBy == 'artist') {
-                    const fa2 = a.artist.toLowerCase(), fb2 = b.artist.toLowerCase()
-                
-                    if (fa2 < fb2) {
+                })
+            } else if (this.sortBy == 'artist') {
+                return temp.sort((a, b) => {
+                    if (a.artist.toLowerCase() < b.artist.toLowerCase()) {
                         return -1
                     }
-                    if (fa2 > fb2) {
+                    if (a.artist.toLowerCase() > b.artist.toLowerCase()) {
                         return 1
                     }
-                    return 0 
-                }
-            })
-            return this.$store.getters.getTracks
-        }
-
+                    return 0
+                })
+            } else {
+                return temp
+            }
+        } 
     },
     mounted() {
         return this.$store.dispatch("fetchTracks")
