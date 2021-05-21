@@ -51,7 +51,7 @@ const playlists = {
             })
             if (response.status == 200) {
                 let result = await response.json()
-                this.$store.commit('UPDATED_PLAYLIST', result)
+                this.$store.commit('UPDATE_PLAYLISTS', result)
             }
         }
     },

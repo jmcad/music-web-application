@@ -14,7 +14,7 @@ const store = Vuex.createStore({
         FETCH_PLAYLISTS(state, playlists) {
             state.playlists = playlists
         },
-        UPDATED_PLAYLISTS(state, playlists) {
+        UPDATE_PLAYLISTS(state, playlists) {
             state.playlists = playlists
         }
     },
