@@ -26,6 +26,7 @@ const playlists = {
                 <div>
                     <h3>{{ playlist.name }}</h3>
                     <h3>{{ playlist.description }}</h3>
+                    <button @click="onDeletePlaylist">Delete</button>
                 </div>
             </li>
         </ul>   
@@ -34,7 +35,6 @@ const playlists = {
     data() {
         return {
             addPlaylistForm: {
-                track_id: '',
                 name: '',
                 description: '',
                 songs: []
@@ -53,6 +53,19 @@ const playlists = {
                 let result = await response.json()
                 this.$store.commit('UPDATE_PLAYLISTS', result)
             }
+        },
+        async deletePlaylist(playlistID) {
+            let path = `/playlists/${playlistID}`
+            let response = await fetch(path, {
+                method: 'DELETE'
+            })
+            if (response.status == 200) {
+                let result = await response.json()
+                this.$store.commit('UPDATE_PLAYLISTS', result)
+            }
+        },
+        onDeletePlaylist(playlist) {
+            this.deletePlaylist(playlist.playlistid)
         }
     },
     computed: {

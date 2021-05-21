@@ -1,22 +1,43 @@
 import sqlite3
+import uuid
 
 music_data = [
-                (1, 'Renegades', 'ONE OK ROCK', 242, 'renegades.jpg', '/static/assets/renegades.mp3'),
-                (2, 'Need You', 'Lost Sky', 277, 'lostsky-needyou.jpg', '/static/assets/Lost Sky - Need You [NCS Release].mp3'),
-                (3, 'Royalty', 'Egzod, Maestro Chives, Neoni', 223, 'royalty.jpg', '/static/assets/Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3'),
+                (uuid.uuid4().hex, 'Renegades', 'ONE OK ROCK', 242, 'renegades.jpg', '/static/assets/renegades.mp3'),
+                (uuid.uuid4().hex, 'Need You', 'Lost Sky', 277, 'lostsky-needyou.jpg', '/static/assets/Lost Sky - Need You [NCS Release].mp3'),
+                (uuid.uuid4().hex, 'Royalty', 'Egzod, Maestro Chives, Neoni', 223, 'royalty.jpg', '/static/assets/Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3'),
              ]
 
 playlist_samples = [
-                        (None, 'My Playlist', 'This is my personal playlist.'),
-                        (None, 'Cool Playlist', 'The coolest playlist ever!'),
+                        (uuid.uuid4().hex, 'My Playlist', 'This is my personal playlist.'),
+                        (uuid.uuid4().hex, 'Cool Playlist', 'The coolest playlist ever!'),
                     ]
 
 # CREATE TABLE
-def create_table_tracks(conn):
+def create_users_table(conn):
+    cur = conn.cursor()
+
+    try:
+        usersql = ("CREATE TABLE users ("
+                        "user_id INTEGER PRIMARY KEY, "
+                        "username TEXT NOT NULL, "
+                        "passwordhash TEXT NOT NULL, "
+                        "UNIQUE(username))")
+
+        cur.execute(usersql)
+        conn.commit()
+    except sqlite3.Error as err:
+        print(err)
+    else:
+        print("Users table created!")
+    finally:
+        cur.close
+
+
+def create_tracks_table(conn):
     cur = conn.cursor()
 
     sql = ("CREATE TABLE tracks ("
-                "track_id INTEGER PRIMARY KEY, "
+                "track_id VARCHAR(50) PRIMARY KEY, "
                 "title VARCHAR(20), "
                 "artist VARCHAR(20), "
                 "length INTEGER, "
@@ -31,7 +52,8 @@ def create_table_tracks(conn):
     finally:
         cur.close()
 
-def create_table_playlists(conn):
+
+def create_playlists_table(conn):
     cur = conn.cursor()
 
     # sql = ("CREATE TABLE playlists ("
@@ -41,7 +63,7 @@ def create_table_playlists(conn):
     #             "PRIMARY KEY(playlist_id))")
 
     sql = ("CREATE TABLE playlists ("
-                "playlist_id INTEGER PRIMARY KEY, "
+                "playlist_id VARCHAR(50) PRIMARY KEY, "
                 "name VARCHAR(20), "
                 "description VARCHAR(50))")
     
@@ -90,6 +112,7 @@ def insert_data(conn):
     finally:
         cur.close()
 
+
 # QUERY the database
 def query_data(conn):
     cur = conn.cursor()
@@ -111,7 +134,7 @@ if __name__ == "__main__":
         print(err)
     else:
         drop_table(conn)
-        create_table_tracks(conn)
-        create_table_playlists(conn)
+        create_tracks_table(conn)
+        create_playlists_table(conn)
         insert_data(conn)
         conn.close()

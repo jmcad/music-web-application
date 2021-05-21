@@ -1,3 +1,4 @@
+import uuid
 from flask import Flask, request, g
 import json
 import sqlite3
@@ -34,14 +35,14 @@ def playlists():
     if request.method == 'POST':
         playlist_data = request.get_json()
         print(playlist_data)
-        playlistid = playlist_data.get('track_id')
+        playlistid = uuid.uuid4().hex
         name = playlist_data.get('name')
         description = playlist_data.get('description')
 
         myplaylist = ("INSERT INTO `playlists` (`playlist_id`, `name`, `description`) VALUES(?,?,?)")
 
         try:
-            cur.execute(myplaylist, (None, name, description))
+            cur.execute(myplaylist, (playlistid, name, description))
             db.commit()
         except sqlite3.Error as err:
             print("hello")
@@ -50,6 +51,14 @@ def playlists():
             cur.close()
 
     return json.dumps(getPlaylists())
+
+
+@app.route('/playlists/<playlist_id>', methods=['DELETE'])
+def singlePlaylist(playlist_id):
+    db = get_db()
+    cur = db.cursor()
+
+    if request.method == 'DELETE':
 
 
 def getTracks():
@@ -90,6 +99,12 @@ def getPlaylists():
 
     return playlists
 
+def removePlaylist(playlist_id):
+    for playlist in getPlaylists():
+        if playlist['playlistid'] == playlist_id:
+            getPlaylists().remove(playlist)
+            return True
+    return False
 
 
 if __name__ == "__main__":
