@@ -13,6 +13,9 @@ const store = Vuex.createStore({
         },
         FETCH_PLAYLISTS(state, playlists) {
             state.playlists = playlists
+        },
+        UPDATED_PLAYLISTS(state, playlists) {
+            state.playlists = playlists
         }
     },
     actions: {
@@ -30,16 +33,16 @@ const store = Vuex.createStore({
                 commit('FETCH_PLAYLISTS', result)
             }
         },
-        // async postPlaylist({ commit }) {
-        //     const response = await fetch('', {
-        //         method: 'POST',
-        //         body: JSON.stringify(playlist)
-        //     })
-        //     if (response.status == 200) {
-        //         const result = await response.json()
-        //         commit('POST_PLAYLIST', result)
-        //     }
-        // }
+        async postPlaylist({ commit }) {
+            const response = await fetch('/playlists', {
+                method: 'POST',
+                body: JSON.stringify(playlist)
+            })
+            if (response.status == 200) {
+                const result = await response.json()
+                commit('POST_PLAYLIST', result)
+            }
+        }
     },
     // Use getters instead of directly accessing the state
     getters: {

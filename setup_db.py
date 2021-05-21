@@ -1,17 +1,14 @@
 import sqlite3
 
 music_data = [
-                # (1, 'Ghost', 'Hoshimachi Suisei', 281, 'ghost.jpg', '/static/assets/GHOST.mp3'),
-                # (2, 'Next Color Planet', 'Hoshimachi Suisei', 260, 'nextcolorplanet.jpg', '/static/assets/NEXT COLOR PLANET.mp3'),
-                # (3, 'Mogu Mogu YUMMY!', 'Nekomata Okayu', 200, 'yummy.jpg', '/static/assets/YUMMY.mp3'),
-                (4, 'Renegades', 'ONE OK ROCK', 242, 'renegades.jpg', '/static/assets/renegades.mp3'),
-                (5, 'Need You', 'Lost Sky', 277, 'lostsky-needyou.jpg', '/static/assets/Lost Sky - Need You [NCS Release].mp3'),
-                (6, 'Royalty', 'Egzod, Maestro Chives, Neoni', 223, 'royalty.jpg', '/static/assets/Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3'),
+                (1, 'Renegades', 'ONE OK ROCK', 242, 'renegades.jpg', '/static/assets/renegades.mp3'),
+                (2, 'Need You', 'Lost Sky', 277, 'lostsky-needyou.jpg', '/static/assets/Lost Sky - Need You [NCS Release].mp3'),
+                (3, 'Royalty', 'Egzod, Maestro Chives, Neoni', 223, 'royalty.jpg', '/static/assets/Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3'),
              ]
 
 playlist_samples = [
-                        (1, 'My Playlist', 'This is my personal playlist. It contains great music!'),
-                        (2, 'Cool Playlist', 'The coolest playlist ever!'),
+                        (None, 'My Playlist', 'This is my personal playlist.'),
+                        (None, 'Cool Playlist', 'The coolest playlist ever!'),
                     ]
 
 # CREATE TABLE
@@ -19,13 +16,12 @@ def create_table_tracks(conn):
     cur = conn.cursor()
 
     sql = ("CREATE TABLE tracks ("
-                "track_id INTEGER, "
+                "track_id INTEGER PRIMARY KEY, "
                 "title VARCHAR(20), "
                 "artist VARCHAR(20), "
                 "length INTEGER, "
                 "cover VARCHAR(20), "
-                "source VARCHAR(20), "
-                "PRIMARY KEY(track_id))")
+                "source VARCHAR(20))")
     try:
         cur.execute(sql)
     except sqlite3.Error as err:
@@ -38,11 +34,16 @@ def create_table_tracks(conn):
 def create_table_playlists(conn):
     cur = conn.cursor()
 
+    # sql = ("CREATE TABLE playlists ("
+    #             "playlist_id INTEGER, "
+    #             "name VARCHAR(20), "
+    #             "description VARCHAR(50), "
+    #             "PRIMARY KEY(playlist_id))")
+
     sql = ("CREATE TABLE playlists ("
-                "playlist_id INTEGER, "
+                "playlist_id INTEGER PRIMARY KEY, "
                 "name VARCHAR(20), "
-                "description VARCHAR(50), "
-                "PRIMARY KEY(playlist_id))")
+                "description VARCHAR(50))")
     
     try:
         cur.execute(sql)

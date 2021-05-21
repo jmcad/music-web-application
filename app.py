@@ -1,6 +1,5 @@
 from flask import Flask, request, g
 import json
-import math
 import sqlite3
 
 app = Flask(__name__)
@@ -21,9 +20,37 @@ def teardown_db(error):
 def index():
     return app.send_static_file('index.html')
 
+
 @app.route('/tracks')
 def tracks():
     return json.dumps(getTracks())
+
+
+@app.route('/playlists', methods=['GET', 'POST'])
+def playlists():
+    db = get_db()
+    cur = db.cursor()
+
+    if request.method == 'POST':
+        playlist_data = request.get_json()
+        print(playlist_data)
+        playlistid = playlist_data.get('track_id')
+        name = playlist_data.get('name')
+        description = playlist_data.get('description')
+
+        myplaylist = ("INSERT INTO `playlists` (`playlist_id`, `name`, `description`) VALUES(?,?,?)")
+
+        try:
+            cur.execute(myplaylist, (None, name, description))
+            db.commit()
+        except sqlite3.Error as err:
+            print("hello")
+            print(err)
+        finally:
+            cur.close()
+
+    return json.dumps(getPlaylists())
+
 
 def getTracks():
     db = get_db()
@@ -45,16 +72,24 @@ def getTracks():
 
     return tracks
 
-# TODO: Get data fro database
+
 def getPlaylists():
     db = get_db()
     cur = db.cursor()
 
     playlists = []
 
-    sql = "SELECT `name`, `description` FROM `playlists`"
+    sql = "SELECT `playlist_id`, `name`, `description` FROM `playlists`"
+    cur.execute(sql)
+    for (playlistid, name, description) in cur:
+        playlists.append({
+            "playlistid": playlistid,
+            "name": name,
+            "description": description
+        })
 
     return playlists
+
 
 
 if __name__ == "__main__":
