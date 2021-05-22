@@ -39,13 +39,12 @@ def playlists():
         name = playlist_data.get('name')
         description = playlist_data.get('description')
 
-        myplaylist = ("INSERT INTO `playlists` (`playlist_id`, `name`, `description`) VALUES(?,?,?)")
+        myplaylist = ("INSERT INTO `playlists` (`playlistid`, `name`, `description`) VALUES(?,?,?)")
 
         try:
             cur.execute(myplaylist, (playlistid, name, description))
             db.commit()
         except sqlite3.Error as err:
-            print("hello")
             print(err)
         finally:
             cur.close()
@@ -59,6 +58,17 @@ def singlePlaylist(playlist_id):
     cur = db.cursor()
 
     if request.method == 'DELETE':
+        sql = ("DELETE FROM playlists WHERE playlistid=?")
+
+        try:
+            cur.execute(sql, (playlist_id,))
+            db.commit()
+        except sqlite3.Error as err:
+            print(err)
+        finally:
+            cur.close()
+    
+    return json.dumps(getPlaylists())
 
 
 def getTracks():
@@ -67,7 +77,7 @@ def getTracks():
     
     tracks = []
 
-    sql = "SELECT `track_id`, `title`, `artist`, `length`, `cover`, `source` FROM `tracks`"
+    sql = ("SELECT `trackid`, `title`, `artist`, `length`, `cover`, `source` FROM `tracks`")
     cur.execute(sql)
     for (trackid, title, artist, length, cover, source) in cur:
         tracks.append({
@@ -88,7 +98,7 @@ def getPlaylists():
 
     playlists = []
 
-    sql = "SELECT `playlist_id`, `name`, `description` FROM `playlists`"
+    sql = "SELECT `playlistid`, `name`, `description` FROM `playlists`"
     cur.execute(sql)
     for (playlistid, name, description) in cur:
         playlists.append({
@@ -98,13 +108,6 @@ def getPlaylists():
         })
 
     return playlists
-
-def removePlaylist(playlist_id):
-    for playlist in getPlaylists():
-        if playlist['playlistid'] == playlist_id:
-            getPlaylists().remove(playlist)
-            return True
-    return False
 
 
 if __name__ == "__main__":

@@ -12,13 +12,10 @@ const alltracks = {
     </div>
     <div class="framedbox">
         <div class="article-box">
-            <article v-for="track, index in filteredTracks" :key="track.title">
-                <router-link v-bind:to="{ name: 'track', params: { trackID: index } }">
-                    <img v-bind:src="'/static/images/' + track.cover" alt="">
-                    <h3>{{ track.title }}</h3>
-                    <span>{{ track.artist }}</span>
-                </router-link>
-            </article> 
+            <tracklist v-for="track in filteredTracks"
+                :key="track.trackid"
+                :track="track">
+            </tracklist>
         </div>
     </div>
     `,

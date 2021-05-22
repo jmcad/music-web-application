@@ -18,7 +18,7 @@ def create_users_table(conn):
 
     try:
         usersql = ("CREATE TABLE users ("
-                        "user_id INTEGER PRIMARY KEY, "
+                        "userid INTEGER PRIMARY KEY, "
                         "username TEXT NOT NULL, "
                         "passwordhash TEXT NOT NULL, "
                         "UNIQUE(username))")
@@ -37,7 +37,7 @@ def create_tracks_table(conn):
     cur = conn.cursor()
 
     sql = ("CREATE TABLE tracks ("
-                "track_id VARCHAR(50) PRIMARY KEY, "
+                "trackid VARCHAR(50) PRIMARY KEY, "
                 "title VARCHAR(20), "
                 "artist VARCHAR(20), "
                 "length INTEGER, "
@@ -56,14 +56,8 @@ def create_tracks_table(conn):
 def create_playlists_table(conn):
     cur = conn.cursor()
 
-    # sql = ("CREATE TABLE playlists ("
-    #             "playlist_id INTEGER, "
-    #             "name VARCHAR(20), "
-    #             "description VARCHAR(50), "
-    #             "PRIMARY KEY(playlist_id))")
-
     sql = ("CREATE TABLE playlists ("
-                "playlist_id VARCHAR(50) PRIMARY KEY, "
+                "playlistid VARCHAR(50) PRIMARY KEY, "
                 "name VARCHAR(20), "
                 "description VARCHAR(50))")
     

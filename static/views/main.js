@@ -5,15 +5,11 @@ const main = {
             <div class="banner">
                 <img src="/static/images/banner.jpg" alt="">
             </div>
-            
             <div class="article-box">
-                <article v-for="track, index in tracks">
-                    <router-link v-bind:to="{ name: 'track', params: { trackID: index } }">
-                        <img v-bind:src="'/static/images/' + track.cover" alt="">
-                        <h3>{{ track.title }}</h3>
-                        <span>{{ track.artist }}</span>
-                    </router-link>
-                </article> 
+                <tracklist v-for="track in tracks" 
+                    :key="track.trackid"
+                    :track="track">
+                </tracklist>
             </div>
         </div>
     </main>

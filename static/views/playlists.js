@@ -25,8 +25,8 @@ const playlists = {
             <li v-for="playlist in playlists">
                 <div>
                     <h3>{{ playlist.name }}</h3>
-                    <h3>{{ playlist.description }}</h3>
-                    <button @click="onDeletePlaylist">Delete</button>
+                    <h3>{{ playlist.description }}</h3> 
+                    <button @click="onDeletePlaylist(playlist)">Delete</button>
                 </div>
             </li>
         </ul>   
@@ -54,8 +54,8 @@ const playlists = {
                 this.$store.commit('UPDATE_PLAYLISTS', result)
             }
         },
-        async deletePlaylist(playlistID) {
-            let path = `/playlists/${playlistID}`
+        async deletePlaylist(playlistid) {
+            let path = `/playlists/${playlistid}`
             let response = await fetch(path, {
                 method: 'DELETE'
             })
