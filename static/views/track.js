@@ -1,11 +1,11 @@
 const track = {
+    props: ['trackID'],
     template: `
     <main class="content main">
         <div>
-        <h3>This is the track ID: {{ trackID }}</h3>
             <div class="article-box flexbox">
                 <div class="img-box">
-                    <img v-bind:src="'/static/images/' + track.cover">
+                    <img v-bind:src="track.cover">
                 </div>
                 <div class="track-details">
                     <h2>{{ track.title }}</h2>
@@ -15,8 +15,14 @@ const track = {
                         </div>
                     </div>
                 </div>
+                <div>
+                    <input type="range" min="0" max="100" step="1" v-model="seekValue" @change="onSeek">
+                    <audio v-bind:src="track.source" type="audio/mpeg" ref="audioPlayer" @timeupdate="onPlaying"></audio>
+                    <p>{{ currentTime }}</p>
+                </div>
                 <div class="player-controls">
-
+                    <button class="play" v-if="!isPlaying" @click="playTrack">Play</button>
+                    <button class="pause" v-else @click="pauseTrack">Pause</button>
                 </div>
             </div>
         </div>
@@ -24,51 +30,50 @@ const track = {
     `,
     data() {
         return {
-            trackID: this.$route.params.trackID,
-            currentTrack: {},
-            index: 0,
+            currentTime: 0,
+            seekValue: 0,
             isPlaying: false,
-            audio: new Audio()
-
+            volume: 0.3
         }
     },
     computed: {
         track() {
-            return this.$store.getters.getTrack(this.trackID)
+            return this.$store.getters.getTrackByID
         }
     },
-    // methods: {
-    //     playTrack(song) {
-    //         if (typeof song.src != "undefined") {
-    //             this.currentTrack = song
-    //             this.audio.src = this.currentTrack.src
-    //         }
-    //         this.audio.play()
-    //         this.isPlaying = true
-    //     },
-    //     pauseTrack() {
-    //         this.audio.pause()
-    //         this.isPlaying = false
-    //     },
-    //     // nextTrack() {
-    //     //     this.index++
-    //     //     if (this.index > this.tracks.length - 1) {
-    //     //         this.index = 0
-    //     //     }
-    //     //     this.currentTrack = this.tracks[this.index]
-    //     //     this.play(this.currentTrack)
-    //     // },
-    //     // previousTrack() {
-    //     //     this.index--
-    //     //     if (this.index < 0) {
-    //     //         this.index = this.tracks.length - 1
-    //     //     }
-    //     //     this.currentTrack = this.tracks[this.index]
-    //     //     this.play(this.currentTrack)
-    //     // }
-    // },
-    // mounted() {
-    //     this.currentTrack = this.track
-    //     this.audio.src = this.currentTrack.src
-    // }
+    methods: {
+        playTrack() {
+            this.$refs.audioPlayer.play()
+            this.$refs.audioPlayer.volume = this.volume
+            this.isPlaying = true
+        },
+        pauseTrack() {
+            this.$refs.audioPlayer.pause()
+            this.isPlaying = false
+        },
+        setSpeed(speed) {
+            this.$refs.audioPlayer.playbackRate = speed
+        },
+        setVolume() {
+            const { audioPlayer } = this.$refs
+            const adjustVolume = audioPlayer.volume
+            
+        },
+        onPlaying() {
+            const { audioPlayer } = this.$refs
+            if (!audioPlayer) {
+                return
+            }
+            this.currentTime = audioPlayer.currentTime
+            this.seekValue = (audioPlayer.currentTime / audioPlayer.duration) * 100
+        },
+        onSeek() {
+            const { audioPlayer } = this.$refs
+            const seekTo = audioPlayer.duration * (this.seekValue / 100)
+            audioPlayer.currentTime = seekTo
+        }
+    },
+    mounted () {
+        return this.$store.dispatch('fetchTrack', this.trackID)
+    }
 }

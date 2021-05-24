@@ -26,12 +26,15 @@
     <script src="/static/store.js"></script>
 
 
+    <script src="/static/views/login.js"></script>
     <script src="/static/views/main.js"></script>
     <script src="/static/views/library.js"></script>
     <script src="/static/views/alltracks.js"></script>
     <script src="/static/views/playlists.js"></script>
     <script src="/static/views/track.js"></script>
+    <script src="/static/components/navbar.js"></script>
     <script src="/static/components/tracklist.js"></script>
+    <script src="/static/components/alert.js"></script>
 
     <script src="/static/router.js"></script>
     <script src="/static/app.js" defer></script>
@@ -40,18 +43,7 @@
 </head>
 <body>
     <div id="app">
-        <header>
-            <div class="content">
-                <div id="logo">
-                </div>
-                <nav>
-                    <ul>
-                        <li><router-link to="/">Home</router-link></li>
-                        <li><router-link to="/library">Library</router-link></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+        <navbar></navbar>
         <router-view></router-view>
     </div>
 </body>

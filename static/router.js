@@ -1,6 +1,11 @@
 // Define route components.
 const routes = [
     {
+        path: '/login',
+        name: 'login',
+        component: login
+    },
+    {
         path: '/',
         name: 'main',
         component: main,
@@ -19,12 +24,11 @@ const routes = [
                 path: 'playlists',
                 name: 'playlists',
                 component: playlists
-                
             }
         ]
     },
     {
-        path: '/track/:trackID',
+        path: '/tracks/:trackID',
         name: 'track',
         component: track,
         props: true

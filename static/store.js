@@ -4,48 +4,50 @@ const store = Vuex.createStore({
         return {
             tracks: [],
             playlists: [],
+            track: {},
+            users: []
         }
-
     },
     mutations: {
-        FETCH_TRACKS(state, tracks) {
+        SET_TRACKS(state, tracks) {
             state.tracks = tracks
         },
-        // this should update the state of the track...
-        // FETCH_TRACK(state, track) {
-        //     state.track = track
-        // },
-        FETCH_PLAYLISTS(state, playlists) {
+        SET_TRACK(state, track) {
+            state.track = track
+        },
+        SET_PLAYLISTS(state, playlists) {
             state.playlists = playlists
         },
         UPDATE_PLAYLISTS(state, playlists) {
             state.playlists = playlists
+        },
+        SET_USERS(state, users) {
+            state.users = users
         }
     },
     actions: {
         async fetchTracks({ commit }) {
-            const response = await fetch('/tracks')
+            let response = await fetch('/tracks')
             if (response.status == 200) {
-                const result = await response.json()
-                commit('FETCH_TRACKS', result)
+                let result = await response.json()
+                commit('SET_TRACKS', result)
             }
         },
         async fetchPlaylists({ commit }) {
-            const response = await fetch('/playlists')
+            let response = await fetch('/playlists')
             if (response.status == 200) {
-                const result = await response.json()
-                commit('FETCH_PLAYLISTS', result)
+                let result = await response.json()
+                commit('SET_PLAYLISTS', result)
             }
         },
-        // async fetchTrack({ commit }, trackid) {
-        //     const path = `/track/${trackid}`
-        //     const response = await fetch(path)
-        //     if (response.status == 200) {
-        //         const result = await response.json()
-        //         console.log(result)
-        //         commit('FETCH_TRACK', result)
-        //     }
-        // }
+        async fetchTrack({ commit }, track_id) {
+            let path = `/tracks/${track_id}`
+            let response = await fetch(path)
+            if (response.status == 200) {
+                let result = await response.json()
+                commit('SET_TRACK', result)
+            }
+        }
     },
     // Use getters instead of directly accessing the state
     getters: {
@@ -55,8 +57,8 @@ const store = Vuex.createStore({
         getPlaylists: state => {
             return state.playlists
         },
-        getTrack: state => id => {
-            return state.tracks.find(track => track.trackid === id)
+        getTrackByID: state => {
+            return state.track
         }
     }
 })
