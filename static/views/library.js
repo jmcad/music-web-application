@@ -6,6 +6,7 @@ const library = {
                 <ul>
                     <router-link to="/library/alltracks"><li>All</li></router-link>
                     <router-link to="/library/playlists"><li>Playlist</li></router-link>
+                    <router-link to=""><li>Liked</li></router-link>
                 </ul>
             </div>
         </div>

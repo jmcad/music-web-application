@@ -10,6 +10,7 @@ html {
 }
 
 body {
+    background-image: linear-gradient(to bottom right,#abe5e6, #7062f0);
     margin: 0;
     height: 100%;
     padding: 0px;
@@ -26,6 +27,18 @@ a {
     text-decoration: none;
 }
 
+li {
+    list-style-type: none;
+}
+
+input {
+    background-color: whitesmoke;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+    padding: 1em;
+    border: none;
+    border-radius: 4px;
+}
+
 header {
     position: fixed;
     top: 0px;
@@ -35,7 +48,7 @@ header {
     z-index: 10;
     padding: 0px;
     margin: 0px;
-    background-color: #424242;
+    background-color: #5680e9;
     overflow: visible;
 }
 
@@ -77,6 +90,7 @@ nav li {
     padding-right: 10px;
     font-size: 1.2em;
     list-style-type: none;
+    transition: 0.3s;
 }
 
 nav li:hover {
@@ -239,16 +253,115 @@ article a {
     display: flex;
 }
 
+.dark {
+    background-color: black;
+    color: white;
+}
+
+/* Playlist */
+.playlistForm {
+    padding: 0;
+    margin-top: 15px;
+}
+
+#playlist-container ul {
+    padding: 0;
+}
+
+#playlist-container li {
+    position: relative;
+    background-image: linear-gradient(to right,#84ceeb, #c1c8e4);
+    box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 10px;
+    height: 120px;
+}
+
+
+/* Login form */
+.form-container{
+    width: 350px;
+}
+
+.loginform a {
+    color: #424242;
+}
+
+form {
+    text-align: center;
+    margin: 0 auto;
+    background-color: white;
+    padding: 2em;
+    padding-bottom: 3em;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px -14px rgba(0, 0, 0, 0.25);
+    margin-bottom: 10px;
+}
+
+.form-container input {
+    display: block;
+    margin: auto;
+    margin-bottom: 1.2em;
+}
+
+select {
+    padding: 1em;
+}
+
+/* Buttons */
+.playlist-btn {
+    position: absolute;
+    right: 5px;
+    line-height: 120px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btnLogin, .btnCreateAcc {
+    background-color: #424242;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.btnEdit {
+    transition: 0.3s;
+}
+
+.btnAdd {
+    transition: 0.3s;
+}
+
+.btnAdd:hover {
+    background-color: darkgray;
+}
+
+.btnEdit:hover {
+    background-color: darkgray;
+}
+
+.btnDelete {
+    transition: 0.3s;
+}
+
+.btnDelete:hover {
+    background-color: crimson;
+    color: white;
+}
+
 /* Player controls */
 .play, .pause {
     font-size: 20px;
     font-weight: 500;
     padding: 15px 25px;
-}
-
-.dark {
-    background-color: black;
-    color: white;
 }
 
 /* Page transition */

@@ -6,6 +6,11 @@ const routes = [
         component: login
     },
     {
+        path: '/register',
+        name: 'register',
+        component: registration
+    },
+    {
         path: '/',
         name: 'main',
         component: main,

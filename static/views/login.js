@@ -1,19 +1,22 @@
 const login = {
     template: `
     <main class="content main">
-        <div class="loginform">
+        <div class="form-container">
+            <alert :message="message" v-if="showAlert"></alert>
             <form @submit.prevent="login">
+            <h1>Log in</h1>
                 <div>
-                    <label for="username">Username</label>
                     <input type="text" required placeholder="Username" v-model="loginForm.username">
                 </div>
                 <div>
-                    <label for="Password">Password</label>
                     <input type="password" required placeholder="Password" v-model="loginForm.password">
                 </div>
                 <div>
-                    <input type="submit" value="Login">
+                    <button class="btnLogin" type="submit">Login</button>
                 </div>
+                <div>
+                    <router-link to="/register">Create an account</router-link>
+                </div>    
             </form>
         </div>
     </main>
@@ -23,7 +26,9 @@ const login = {
             loginForm: {
                 username: '',
                 password: ''   
-            }
+            },
+            message: '',
+            showAlert: false
         }
     },
     methods: {
@@ -38,9 +43,16 @@ const login = {
                 this.$store.commit('SET_USERS', result)
                 this.redirect()
             }
+            this.message = 'Wrong username or password'
+            this.showAlert = true
+            this.resetForm()
         },
         redirect() {
             this.$router.push({name: 'main'})
+        },
+        resetForm() {
+            this.loginForm.username = ''
+            this.loginForm.password = ''
         }
     }
 }

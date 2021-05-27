@@ -1,4 +1,3 @@
-from flask.helpers import flash
 from setup_db import getHashForLogin, getUserByID, getUserByName
 from flask import Flask, request, g, abort, session
 from werkzeug.security import check_password_hash
@@ -10,10 +9,12 @@ import uuid
 app = Flask(__name__)
 app.secret_key = 'some_secret'
 
+
 def get_db():
     if not hasattr(g, '_database'):
         g._database = sqlite3.connect('database.db')
     return g._database
+
 
 @app.teardown_appcontext
 def teardown_db(error):
@@ -36,6 +37,7 @@ def valid_login(username, password):
 def index():
     return app.send_static_file('index.html')
 
+
 @app.route('/login', methods=['POST'])
 def login():
     userdata = request.get_json()
@@ -48,6 +50,7 @@ def login():
 
     session["userid"] = user["userid"]
     return user
+
 
 @app.route("/logout")
 def logout():

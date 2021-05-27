@@ -1,4 +1,4 @@
-const navbar = {
+    const navbar = {
     template: `
     <header>
         <div class="content">
@@ -9,6 +9,7 @@ const navbar = {
                     <li><router-link to="/">Home</router-link></li>
                     <li><router-link to="/library">Library</router-link></li>
                     <li><router-link to="/login">Login</router-link></li>
+                    <li><router-link to="/register">Register</router-link></li>
                 </ul>
             </nav>
         </div>

@@ -2,7 +2,7 @@ const alltracks = {
     template: `
     <div>
         <h1>All tracks</h1>
-        <select name="sortBy" v-model="sortBy">
+        <select v-model="sortBy">
             <option v-for="sortOption in sortOptions" 
                 :label="sortOption.label" 
                 :value="sortOption.value">
@@ -27,7 +27,7 @@ const alltracks = {
                 { label: 'Artist', value: 'artist' }
             ],
             search: '',
-            sortBy: ''
+            sortBy: 'none'
         }
     },
     computed: {
