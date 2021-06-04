@@ -10,8 +10,8 @@ For this exam project, I will create a music web application.
 * Plain CSS
 
 ## How to run ##
-    If database.db is not present or corrupted, rerun setup_db.py in the app folder
-    Start the application by running app.py in the app folder
+If database.db is not present or corrupted, rerun setup_db.py in the app folder
+Start the application by running app.py in the app folder
 
 ## List of functionalities ##
 * Home page consist of a banner and lists four main tracks
