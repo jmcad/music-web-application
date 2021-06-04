@@ -34,18 +34,18 @@ const playlists = {
                 </div>
             </li>
         </ul>
-        <div v-show='isModal'>
-        <form @submit.prevent="onEditPlaylist(playlist)">
-            <h2>Edit Playlist: {{ playlist.name }}</h2>
-            <div>
-                <input type="text" required placeholder="Add a name" v-model="editPlaylistForm.name">
-            </div>
-            <div>
-                <textarea placeholder="Add an optional description" v-model="editPlaylistForm.description"></textarea>
-            </div>
-            <button class="btnSave" type="submit">Apply changes</button>
-            <button @click="isModal = !isModal">Discard</button>
-        </form>
+        <div class="playlistForm" v-show='isModal'>
+            <form @submit.prevent="onEditPlaylist(playlist)">
+                <h2>Edit Playlist: {{ playlist.name }}</h2>
+                <div>
+                    <input type="text" required placeholder="Add a name" v-model="editPlaylistForm.name">
+                </div>
+                <div>
+                    <textarea placeholder="Add an optional description" v-model="editPlaylistForm.description" maxlength="50"></textarea>
+                </div>
+                <button class="btnSave" type="submit">Apply changes</button>
+                <button @click="isModal = !isModal">Discard</button>
+            </form>
         </div>   
     </div>
     `,

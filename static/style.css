@@ -341,9 +341,11 @@ button {
 .btnLike {
     font-size: 20px;
     font-weight: 500;
-    border: none;
-    border-radius: 15px;
     width: 60px;
+}
+
+.fa-heart {
+    color: red;
 }
 
 .btnAdd:hover, .btnEdit:hover, .btnSave:hover {
@@ -359,8 +361,8 @@ button {
 .play, .pause {
     font-size: 20px;
     font-weight: 500;
-    padding: 15px 25px;
-    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 60px;
 }
 
 .playercontainer {
@@ -376,26 +378,19 @@ button {
     width: 100%;
 }
 
-.slidercontainer span {
-    margin-bottom: 20px;
-}
-
 .slider {
     display: flex;
     align-items: center;
     border: 25px;
     width: 300px;
+    height: 0;
 
 }
 
 .slider::-moz-range-thumb {
     height: 25px;
     cursor: pointer;
-    background: #af55eb;
-}
-
-.fa-heart {
-    color: red;
+    background: #abe5e6;
 }
 
 

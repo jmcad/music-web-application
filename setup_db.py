@@ -2,6 +2,7 @@ from werkzeug.security import generate_password_hash
 import sqlite3
 import uuid
 
+# DATA
 music_data = [
                 (uuid.uuid4().hex, 'Renegades', 'ONE OK ROCK', 'Rock', 'Single', '/static/images/renegades.jpg', '/static/assets/renegades.mp3'),
                 (uuid.uuid4().hex, 'Need You', 'Lost Sky', 'EDM', 'Single', '/static/images/lostsky-needyou.jpg', '/static/assets/Lost Sky - Need You [NCS Release].mp3'),
@@ -17,10 +18,12 @@ music_data = [
                 (uuid.uuid4().hex, "Angel With a Shotgun", 'The Cab', 'Rock', 'Album', "/static/images/symphonysoldier.jpg", "/static/assets/Angel With a Shotgun.mp3")
              ]
 
+
 playlist_samples = [
                         (uuid.uuid4().hex, 'My Playlist', 'Sample playlist.'),
                         (uuid.uuid4().hex, 'Cool Playlist', 'The coolest playlist ever!'),
                     ]
+
 
 # CREATE TABLE
 def create_users_table(conn):
@@ -119,7 +122,7 @@ def insert_data(conn):
         cur.close()
 
 
-# 
+# USER/AUTHENTICATION FUNCTIONS
 def addUser(conn, username, hash):
     cur = conn.cursor()
     try:
