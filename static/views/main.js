@@ -4,9 +4,10 @@ const main = {
         <div>
             <div class="banner">
                 <img src="/static/images/banner.jpg" alt="">
+                <h2></h2>
             </div>
             <div class="article-box">
-                <tracklist v-for="track in tracks" 
+                <tracklist v-for="track in tracks.slice(0, 4)" 
                     :key="track.trackid"
                     :track="track">
                 </tracklist>

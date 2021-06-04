@@ -19,6 +19,7 @@ const routes = [
         path: '/library',
         name: 'library',
         component: library,
+        // library route has two child routes
         children: [
             {
                 path: 'alltracks',

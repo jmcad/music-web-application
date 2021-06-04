@@ -3,27 +3,39 @@ const track = {
     template: `
     <main class="content main">
         <div>
-            <div class="article-box flexbox">
+            <div>
                 <div class="img-box">
                     <img v-bind:src="track.cover">
                 </div>
                 <div class="track-details">
                     <h2>{{ track.title }}</h2>
-                    <div>
+                    <span>{{ track.type }} • {{ track.artist }}</span>
+                </div>
+                <div class="playercontainer">
+                    <div class="slidercontainer">
+                        <audio v-bind:src="track.source" type="audio/mpeg" ref="player" @timeupdate="progress"></audio>
+                        <input class="slider" type="range" min="0" max="100" step="1" v-model="seekValue" @change="seek">
+                        <span v-if="currentTime == 0">00 : 00</span>
+                        <span v-else>{{ currentTime.m }} : {{currentTime.s }}</span>
+                        <input class="slider" type="range" min="0" max="100" step="1" v-model="volume" @change="setVolume">
+                        <span>Volume: {{ volume }}</span>
                         <div>
-                            <span>{{ track.artist }}</span>
+                            <button class="play" v-if="!isPlaying" @click="playTrack">
+                                <i class="fa fa-play" aria-hidden="true"></i>
+                            </button>
+                            <button class="pause" v-else @click="pauseTrack">
+                                <i class="fa fa-pause" aria-hidden="true"></i>
+                            </button>
+
+                            <button class="btnLike" v-if="!liked" @click="liked=true">
+                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            </button>
+                            <button class="btnLike" v-else @click="liked=false">
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            </button> 
                         </div>
-                    </div>
-                </div>
-                <div>
-                    <input type="range" min="0" max="100" step="1" v-model="seekValue" @change="onSeek">
-                    <audio v-bind:src="track.source" type="audio/mpeg" ref="audioPlayer" @timeupdate="onPlaying"></audio>
-                    <p>{{ currentTime }}</p>
-                </div>
-                <div class="player-controls">
-                    <button class="play" v-if="!isPlaying" @click="playTrack">Play</button>
-                    <button class="pause" v-else @click="pauseTrack">Pause</button>
-                </div>
+                    </div> 
+                </div> 
             </div>
         </div>
     </main>
@@ -33,7 +45,8 @@ const track = {
             currentTime: 0,
             seekValue: 0,
             isPlaying: false,
-            volume: 0.3
+            volume: 100,
+            liked: false,
         }
     },
     computed: {
@@ -42,38 +55,53 @@ const track = {
         }
     },
     methods: {
+        // used refs to manipulate/access information such as audio controls
         playTrack() {
-            this.$refs.audioPlayer.play()
-            this.$refs.audioPlayer.volume = this.volume
+            this.$refs.player.play()
             this.isPlaying = true
         },
         pauseTrack() {
-            this.$refs.audioPlayer.pause()
+            this.$refs.player.pause()
             this.isPlaying = false
         },
-        setSpeed(speed) {
-            this.$refs.audioPlayer.playbackRate = speed
-        },
         setVolume() {
-            const { audioPlayer } = this.$refs
-            const adjustVolume = audioPlayer.volume
+            let adjustVolume = this.volume / 100
+            this.$refs.player.volume = adjustVolume
             
         },
-        onPlaying() {
-            const { audioPlayer } = this.$refs
-            if (!audioPlayer) {
+        // progress method is called when timeUpdate is emitted
+        progress() {
+            if (!this.$refs.player) {
                 return
             }
-            this.currentTime = audioPlayer.currentTime
-            this.seekValue = (audioPlayer.currentTime / audioPlayer.duration) * 100
+            this.currentTime = this.secondsToTime(this.$refs.player.currentTime)
+            // update seekValue to be in sync with currentTime
+            this.seekValue = (this.$refs.player.currentTime 
+                        / this.$refs.player.duration) * 100
         },
-        onSeek() {
-            const { audioPlayer } = this.$refs
-            const seekTo = audioPlayer.duration * (this.seekValue / 100)
-            audioPlayer.currentTime = seekTo
+        // 
+        seek() {
+            let seekTo = this.$refs.player.duration * (this.seekValue / 100)
+            this.$refs.player.currentTime = seekTo
+        },
+        secondsToTime(sec) {
+            let minutes = Math.floor((sec % (60 * 60)) / 60)
+
+            let seconds = Math.ceil((sec % (60 * 60)) % 60)
+
+            let timeObject = {
+                'm': this.timeFormat(minutes),
+                's': this.timeFormat(seconds)
+            }
+            return timeObject
+        },
+        timeFormat(time) {
+            return parseInt(time) < 10 ? ('0' + time) : time
         }
+
     },
     mounted () {
+        // calls the 'fetchTrack' action in store
         return this.$store.dispatch('fetchTrack', this.trackID)
     }
 }

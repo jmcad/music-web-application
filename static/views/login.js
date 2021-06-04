@@ -2,7 +2,7 @@ const login = {
     template: `
     <main class="content main">
         <div class="form-container">
-            <alert :message="message" v-if="showAlert"></alert>
+            <alert class="alert red" :message="message" v-if="showAlert"></alert>
             <form @submit.prevent="login">
             <h1>Log in</h1>
                 <div>
@@ -40,7 +40,9 @@ const login = {
             })
             if (response.status == 200) {
                 let result = await response.json()
-                this.$store.commit('SET_USERS', result)
+                // 'SET_USER' mutation takes in a result
+                // commits the result as the current user
+                this.$store.commit('SET_USER', result)
                 this.redirect()
             }
             this.message = 'Wrong username or password'

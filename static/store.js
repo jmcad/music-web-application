@@ -5,9 +5,10 @@ const store = Vuex.createStore({
             tracks: [],
             playlists: [],
             track: {},
-            users: []
+            currentUser: {},
         }
     },
+    // mutate the states
     mutations: {
         SET_TRACKS(state, tracks) {
             state.tracks = tracks
@@ -21,10 +22,14 @@ const store = Vuex.createStore({
         UPDATE_PLAYLISTS(state, playlists) {
             state.playlists = playlists
         },
-        SET_USERS(state, users) {
-            state.users = users
+        SET_USER(state, currentUser) {
+            state.currentUser = currentUser
+        },
+        LOGOUT_USER(state) {
+            state.currentUser = {}
         }
     },
+    // commit the mutations
     actions: {
         async fetchTracks({ commit }) {
             let response = await fetch('/tracks')
@@ -47,6 +52,9 @@ const store = Vuex.createStore({
                 let result = await response.json()
                 commit('SET_TRACK', result)
             }
+        },
+        logout({ commit }) {
+            commit('LOGOUT_USER')
         }
     },
     // Use getters instead of directly accessing the state
@@ -59,6 +67,9 @@ const store = Vuex.createStore({
         },
         getTrackByID: state => {
             return state.track
+        },
+        getCurrentUser: state => {
+            return state.currentUser
         }
     }
 })

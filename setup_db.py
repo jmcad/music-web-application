@@ -1,16 +1,24 @@
+from werkzeug.security import generate_password_hash
 import sqlite3
 import uuid
 
-from werkzeug.security import generate_password_hash
-
 music_data = [
-                (uuid.uuid4().hex, 'Renegades', 'ONE OK ROCK', 242, '/static/images/renegades.jpg', '/static/assets/renegades.mp3'),
-                (uuid.uuid4().hex, 'Need You', 'Lost Sky', 277, '/static/images/lostsky-needyou.jpg', '/static/assets/Lost Sky - Need You [NCS Release].mp3'),
-                (uuid.uuid4().hex, 'Royalty', 'Egzod, Maestro Chives, Neoni', 223, '/static/images/royalty.jpg', '/static/assets/Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3'),
+                (uuid.uuid4().hex, 'Renegades', 'ONE OK ROCK', 'Rock', 'Single', '/static/images/renegades.jpg', '/static/assets/renegades.mp3'),
+                (uuid.uuid4().hex, 'Need You', 'Lost Sky', 'EDM', 'Single', '/static/images/lostsky-needyou.jpg', '/static/assets/Lost Sky - Need You [NCS Release].mp3'),
+                (uuid.uuid4().hex, 'Royalty', 'Egzod, Maestro Chives, Neoni', 'EDM', 'Single', '/static/images/royalty.jpg', '/static/assets/Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3'),
+                (uuid.uuid4().hex, 'Broken Heart of Gold', 'ONE OK ROCK', 'Rock', 'Single', '/static/images/broken heart of gold.jpg', '/static/assets/Broken Heart of Gold.mp3'),
+                (uuid.uuid4().hex, 'Boulevard of Broken Dreams', 'Green Day', 'Rock', 'Single', '/static/images/Boulevard Of Broken Dreams.png', '/static/assets/Boulevard of Broken Dreams.mp3'),
+                (uuid.uuid4().hex, 'Uptown Funk ft. Bruno Mars', 'Mark Ronson', 'Funk', 'Album', '/static/images/uptownfunk.jpg', '/static/assets/Uptown Funk ft. Bruno Mars.mp3'),
+                (uuid.uuid4().hex, "We Don't Talk Anymore feat. Selena Gomez", 'Charlie Puth', 'Pop', 'Album', "/static/images/ninetrackmind.jpg", "/static/assets/We Don't Talk Anymore feat. Selena Gomez.mp3"),
+                (uuid.uuid4().hex, "Butter", 'BTS', 'K-Pop', 'Single', "/static/images/butter.jpg", "/static/assets/Butter.mp3"),
+                (uuid.uuid4().hex, "On The Ground", 'ROSÉ', 'Pop', 'Single', "/static/images/ontheground.jpg", "/static/assets/On The Ground.mp3"),
+                (uuid.uuid4().hex, "Waste It On Me", 'Steve Aoki', 'Dance/Electronic', 'Album', "/static/images/neonfuture3.jpg", "/static/assets/Waste It On Me.mp3"),
+                (uuid.uuid4().hex, "Dynamite (Tropical Remix)", 'BTS', 'Pop', 'Single', "/static/images/dynamite.jpg", "/static/assets/Dynamite (Tropical Remix).mp3"),
+                (uuid.uuid4().hex, "Angel With a Shotgun", 'The Cab', 'Rock', 'Album', "/static/images/symphonysoldier.jpg", "/static/assets/Angel With a Shotgun.mp3")
              ]
 
 playlist_samples = [
-                        (uuid.uuid4().hex, 'My Playlist', 'This is my personal playlist.'),
+                        (uuid.uuid4().hex, 'My Playlist', 'Sample playlist.'),
                         (uuid.uuid4().hex, 'Cool Playlist', 'The coolest playlist ever!'),
                     ]
 
@@ -39,12 +47,13 @@ def create_tracks_table(conn):
     cur = conn.cursor()
 
     sql = ("CREATE TABLE tracks ("
-                "trackid VARCHAR(50) PRIMARY KEY, "
-                "title VARCHAR(20), "
-                "artist VARCHAR(20), "
-                "length INTEGER, "
-                "cover VARCHAR(20), "
-                "source VARCHAR(20))")
+                "trackid TEXT PRIMARY KEY, "
+                "title TEXT, "
+                "artist TEXT, "
+                "genre TEXT, "
+                "type TEXT, "
+                "cover TEXT, "
+                "source TEXT) ")
     try:
         cur.execute(sql)
     except sqlite3.Error as err:
@@ -59,9 +68,9 @@ def create_playlists_table(conn):
     cur = conn.cursor()
 
     sql = ("CREATE TABLE playlists ("
-                "playlistid VARCHAR(50) PRIMARY KEY, "
-                "name VARCHAR(20), "
-                "description VARCHAR(50))")
+                "playlistid TEXT PRIMARY KEY, "
+                "name TEXT, "
+                "description TEXT)")
     
     try:
         cur.execute(sql)
@@ -77,12 +86,14 @@ def create_playlists_table(conn):
 def drop_table(conn):
     cur = conn.cursor()
 
-    sql = "DROP TABLE tracks"
-    sql2 = "DROP TABLE playlists"
+    sqltracks = "DROP TABLE tracks"
+    sqlplaylists = "DROP TABLE playlists"
+    sqlusers = "DROP TABLE users"
 
     try:
-        cur.execute(sql)
-        cur.execute(sql2)
+        cur.execute(sqltracks)
+        cur.execute(sqlplaylists)
+        cur.execute(sqlusers)
     except sqlite3.Error as err:
         print(err)
     else:
@@ -95,10 +106,9 @@ def drop_table(conn):
 def insert_data(conn):
     cur = conn.cursor()
 
-    sqlTracks = "INSERT INTO tracks VALUES (?,?,?,?,?,?)"
-    sqlPlaylists = "INSERT INTO playlists VALUES (?,?,?)"
-
     try:
+        sqlTracks = "INSERT INTO tracks VALUES (?,?,?,?,?,?,?)"
+        sqlPlaylists = "INSERT INTO playlists VALUES (?,?,?)"
         cur.executemany(sqlTracks, music_data)
         cur.executemany(sqlPlaylists, playlist_samples)
         conn.commit()
@@ -109,20 +119,7 @@ def insert_data(conn):
         cur.close()
 
 
-# QUERY the database
-def query_data(conn):
-    cur = conn.cursor()
-
-    sql = "SELECT * FROM tracks"
-
-    try:
-        cur.execute(sql)
-        print(cur.fetchall())
-    except sqlite3.Error as err:
-        print(err)
-    finally:
-        cur.close()
-
+# 
 def addUser(conn, username, hash):
     cur = conn.cursor()
     try:
@@ -211,5 +208,4 @@ if __name__ == "__main__":
         create_tracks_table(conn)
         create_playlists_table(conn)
         insert_data(conn)
-        addUser(conn, "jmcad", generate_password_hash("JMcad98"))
         conn.close()

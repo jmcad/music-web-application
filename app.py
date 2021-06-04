@@ -1,6 +1,7 @@
-from setup_db import getHashForLogin, getUserByID, getUserByName
+from setup_db import addUser, getHashForLogin, getUserByID, getUserByName
 from flask import Flask, request, g, abort, session
-from werkzeug.security import check_password_hash
+from time import sleep
+from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
 import json
 import uuid
@@ -54,12 +55,32 @@ def login():
 
 @app.route("/logout")
 def logout():
+    sleep(1)
     session.pop("userid")
     return "OK"
 
 
+@app.route('/register', methods=['POST'])
+def register():
+    registrationdata = request.get_json()
+
+    username = registrationdata.get('username')
+    password = registrationdata.get('password')
+
+    hash = generate_password_hash(password)
+
+    db = get_db()
+    sleep(1)
+    addUser(db, username, hash)
+    user = getUserByName(db, registrationdata["username"])
+
+    session["userid"] = user["userid"]
+    return user
+
+
 @app.route('/tracks')
 def tracks():
+    sleep(1)
     return json.dumps(getTracks())
 
 
@@ -67,6 +88,7 @@ def tracks():
 def playlists():
     db = get_db()
     cur = db.cursor()
+    sleep(1)
 
     if request.method == 'POST':
         playlist_data = request.get_json()
@@ -93,16 +115,16 @@ def getTrackByID(track_id):
     cur = db.cursor()
 
     try:
-        sql = ("SELECT trackid, title, artist, length, cover, source FROM tracks WHERE trackid=?")
+        sql = ("SELECT trackid, title, artist, genre, type, cover, source FROM tracks WHERE trackid=?")
         cur.execute(sql, (track_id,))
         for row in cur:
-            (trackid, title, artist, length, cover, source) = row
-            print(row)
+            (trackid, title, artist, genre, type, cover, source) = row
             return {
                 "trackid": trackid,
                 "title": title,
                 "artist": artist,
-                "length": length,
+                "genre": genre,
+                "type": type,
                 "cover": cover,
                 "source": source
             }
@@ -118,6 +140,7 @@ def singlePlaylist(playlist_id):
     cur = db.cursor()
 
     if request.method == 'PUT':
+        # get playlist data from frontend
         playlist_data = request.get_json()
         name = playlist_data.get('name')
         description = playlist_data.get('description')
@@ -132,6 +155,7 @@ def singlePlaylist(playlist_id):
 
     if request.method == 'DELETE':
         try:
+            sleep(1)
             sql = ("DELETE FROM playlists WHERE playlistid=?")
             cur.execute(sql, (playlist_id,))
             db.commit()
@@ -149,14 +173,15 @@ def getTracks():
     
     tracks = []
 
-    sql = ("SELECT `trackid`, `title`, `artist`, `length`, `cover`, `source` FROM `tracks`")
+    sql = ("SELECT `trackid`, `title`, `artist`, `genre`, `type`, `cover`, `source` FROM `tracks`")
     cur.execute(sql)
-    for (trackid, title, artist, length, cover, source) in cur:
+    for (trackid, title, artist, genre, type, cover, source) in cur:
         tracks.append({
             "trackid": trackid,
             "title": title,
             "artist": artist,
-            "length": length,
+            "genre": genre,
+            "type": type,
             "cover": cover,
             "src": source
         })

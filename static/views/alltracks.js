@@ -8,7 +8,7 @@ const alltracks = {
                 :value="sortOption.value">
             </option>
         </select>
-        <input type="text" v-model="search" placeholder="Search"/>
+        <input class="searchbar" type="text" v-model="search" placeholder="Search"/>
     </div>
     <div class="framedbox">
         <div class="article-box">
@@ -24,18 +24,20 @@ const alltracks = {
             sortOptions: [
                 { label: 'Custom order', value: 'none' },
                 { label: 'Title', value: 'title' },
-                { label: 'Artist', value: 'artist' }
+                { label: 'Artist', value: 'artist' },
+                { label: 'Genre', value: 'genre' }
             ],
             search: '',
             sortBy: 'none'
         }
     },
     computed: {
+        // create a new filtered array
         filteredTracks() {
             const temp = this.$store.getters.getTracks.filter((track) => {
                 return track.title.toLowerCase().includes(this.search.toLowerCase())
             })
-
+            
             if (this.sortBy == 'title') {
                 return temp.sort((a, b) => {
                     if (a.title.toLowerCase() < b.title.toLowerCase()) {
@@ -56,12 +58,23 @@ const alltracks = {
                     }
                     return 0
                 })
+            } else if (this.sortBy == 'genre') {
+                return temp.sort((a, b) => {
+                    if (a.genre.toLowerCase() < b.genre.toLowerCase()) {
+                        return -1
+                    }
+                    if (a.genre.toLowerCase() > b.genre.toLowerCase()) {
+                        return 1
+                    }
+                    return 0
+                })
             } else {
                 return temp
             }
         } 
     },
     mounted() {
+        // calls the 'fetchTracks' action in store
         return this.$store.dispatch("fetchTracks")
     }
 }

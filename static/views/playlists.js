@@ -12,18 +12,18 @@ const playlists = {
                 <input type="text" required placeholder="Playlist name" v-model="addPlaylistForm.name">
             </div>
             <div>
-                <textarea placeholder="Playlist description" v-model="addPlaylistForm.description"></textarea>
+                <textarea placeholder="Playlist description" v-model="addPlaylistForm.description" maxlength="50"></textarea>
             </div>
             <div>
-                <button type="submit">Save</button>
+                <button class="btnSave" type="submit">Save</button>
             </div>
         </form>
     </div>
-    <div id="playlist-container">
+    <div id="playlist-container" v-for="playlist in playlists" :key="playlist.playlistid">
         <ul>
-            <li v-for="playlist in playlists">
+            <li>
                 <div class="playlist-btn">
-                    <button class="btnEdit" @click="modal = !modal">Edit</button>
+                    <button class="btnEdit" @click="isModal = !isModal">Edit</button>
                     <button class="btnDelete" @click="onDeletePlaylist(playlist)">Delete</button>
                 </div>
                 <div>
@@ -33,21 +33,20 @@ const playlists = {
                     <p>{{ playlist.description }}</p>
                 </div>
             </li>
-        </ul>   
-    </div>
-    <div v-if="modal">
-        <div>
-            <form @submit.prevent="onEditPlaylist(playlist)">
-                <div>
-                    <input type="text" required placeholder="Add a name" v-model="editPlaylistForm.name">
-                </div>
-                <div>
-                    <textarea placeholder="Add an optional description" v-model="editPlaylistForm.description"></textarea>
-                </div>
-                <button type="submit">Apply changes</button>
-                <button>Discard</button>
-            </form>
-        </div>
+        </ul>
+        <div v-show='isModal'>
+        <form @submit.prevent="onEditPlaylist(playlist)">
+            <h2>Edit Playlist: {{ playlist.name }}</h2>
+            <div>
+                <input type="text" required placeholder="Add a name" v-model="editPlaylistForm.name">
+            </div>
+            <div>
+                <textarea placeholder="Add an optional description" v-model="editPlaylistForm.description"></textarea>
+            </div>
+            <button class="btnSave" type="submit">Apply changes</button>
+            <button @click="isModal = !isModal">Discard</button>
+        </form>
+        </div>   
     </div>
     `,
     data() {
@@ -55,17 +54,17 @@ const playlists = {
             addPlaylistForm: {
                 name: '',
                 description: '',
-                songs: []
             },
             editPlaylistForm: {
+                id: '',
                 name: '',
                 description: '',
-                songs: []
             },
             message: '',
             showMessage: false,
             isHidden: false,
-            modal: false,
+            loading: false,
+            isModal: false
         }
     },
     methods: {
@@ -114,9 +113,13 @@ const playlists = {
         },
         onEditPlaylist(playlist) {
             this.editPlaylist(playlist.playlistid)
+            this.isModal = false
         },
         onDeletePlaylist(playlist) {
-            this.deletePlaylist(playlist.playlistid)
+            let response = confirm(`Are you sure you want to delete ${playlist.name}`)
+            if (response) {
+                this.deletePlaylist(playlist.playlistid)
+            }
         },
         resetForm() {
             this.addPlaylistForm.name = ''
