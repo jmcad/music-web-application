@@ -23,7 +23,7 @@ const playlists = {
         <ul>
             <li>
                 <div class="playlist-btn">
-                    <button class="btnEdit" @click="isModal = !isModal">Edit</button>
+                    <button class="btnEdit" @click="isModal = !isModal" @click="editingID = playlist.playlistid">Edit</button>
                     <button class="btnDelete" @click="onDeletePlaylist(playlist)">Delete</button>
                 </div>
                 <div>
@@ -34,8 +34,8 @@ const playlists = {
                 </div>
             </li>
         </ul>
-        <div class="playlistForm" v-show='isModal'>
-            <form @submit.prevent="onEditPlaylist(playlist)">
+        <div class="playlistForm" v-if="editingID == playlist.playlistid" v-show='isModal'>
+            <form @submit.prevent="onEditPlaylist(editingID)">
                 <h2>Edit Playlist: {{ playlist.name }}</h2>
                 <div>
                     <input type="text" required placeholder="Add a name" v-model="editPlaylistForm.name">
@@ -46,8 +46,8 @@ const playlists = {
                 <button class="btnSave" type="submit">Apply changes</button>
                 <button @click="isModal = !isModal">Discard</button>
             </form>
-        </div>   
-    </div>
+        </div> 
+    </div>  
     `,
     data() {
         return {
@@ -64,7 +64,8 @@ const playlists = {
             showMessage: false,
             isHidden: false,
             loading: false,
-            isModal: false
+            isModal: false,
+            editingID: ''
         }
     },
     methods: {
@@ -111,8 +112,8 @@ const playlists = {
                 this.showMessage = true
             }
         },
-        onEditPlaylist(playlist) {
-            this.editPlaylist(playlist.playlistid)
+        onEditPlaylist(playlistid) {
+            this.editPlaylist(playlistid)
             this.isModal = false
         },
         onDeletePlaylist(playlist) {
