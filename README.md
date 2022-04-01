@@ -1,5 +1,5 @@
-# Exam Project #
-For this exam project, I will create a music web application.
+# Music Web Application #
+A music web application project.
 
 ## Technologies used ##
 * Python
